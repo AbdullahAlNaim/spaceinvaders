@@ -1,18 +1,15 @@
-class Projectile {
+class InvaderProjectile {
     constructor({ position, velocity }) {
         this.position = position
         this.velocity = velocity
 
-        this.radius = 4
+        this.width = 3
+        this.height = 10
     }
 
     draw() {
-        c.beginPath()
-        c.arc(this.position.x, this.position.y, this.radius,
-            0, Math.PI * 2) //creates a circle
-        c.fillStyle = 'red'
-        c.fill()
-        c.closePath()
+        c.fillStyle = 'white'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update() {

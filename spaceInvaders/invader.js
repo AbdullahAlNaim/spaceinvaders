@@ -1,5 +1,5 @@
-class Player {
-    constructor() {
+class Invader {
+    constructor({ position }) {
         this.velocity = {
             x: 0,
             y: 0
@@ -8,15 +8,15 @@ class Player {
         this.rotation = 0
 
         const image = new Image() //from js api
-        image.src = './assets/spaceship.png'
+        image.src = './assets/invader.png'
         image.onload = () => {
-            const scale = 0.2//.15
+            const scale = 1
             this.image = image
             this.width = image.width * scale
             this.height = image.height * scale
             this.position = {
-                x: canvas.width / 2 - this.width / 2,
-                y: canvas.height - this.height - 100,
+                x: position.x,
+                y: position.y,
             }
         }
     }
@@ -24,18 +24,6 @@ class Player {
     draw() {
         // c.fillStyle = 'red'
         // c.fillRect(this.position.x, this.position.y, this.width, this.height)
-        c.save()
-        c.translate(
-            player.position.x + player.width / 2,
-            player.position.y + player.height / 2
-        )
-
-        c.rotate(this.rotation)
-
-        c.translate(
-            -player.position.x - player.width / 2,
-            -player.position.y - player.height / 2
-        )
 
         // if (this.image)
         c.drawImage(
@@ -45,13 +33,28 @@ class Player {
             this.width,
             this.height
         )
-        c.restore()
+
     }
 
-    update() {
+    update({ velocity }) {
         if (this.image) {
             this.draw()
-            this.position.x += this.velocity.x
+            this.position.x += velocity.x
+            this.position.y += velocity.y
         }
+    }
+
+    shoot(InvaderProjectiles) {
+        InvaderProjectiles.push(new InvaderProjectile({
+            position: {
+                x: this.position.x + this.width / 2,
+                y: this.position.y + this.height
+            },
+            velocity: {
+                x: 0,
+                y: 5
+            }
+        })
+        )
     }
 }
